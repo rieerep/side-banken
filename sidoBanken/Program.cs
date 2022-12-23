@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,29 +11,29 @@ namespace sidoBanken
     {
         static void Main(string[] args)
         {
-            int acc1 = 1000;
-            int acc2 = 2000;
-            //string[] userNames = new string[] { "Fred", "Kjell", "Bo", "Tor", "Hel", "Bal" };
-            //string[] passwords = new string[] { "123", "123456", "321" };
+            
+            string[] userNames = new string[] { "Fred", "Kjell", "Bo", "Tor", "Hel", "Bal" };
+            string[] passwords = new string[] { "123", "123456", "321" };
+            int[] account1 = new int[] { 10000, 20000, 30000 };
+            int[] account2 = new int[] { 23232, 232323, 23223 };
             //string currentUser = Console.ReadLine();
             //string currentPassword = Console.ReadLine();
             Console.WriteLine("Välkommen till banken!");
-            MainLogin();
+            MainLogin(userNames, passwords);
             //LoggedIn(); // todo: flytta in till inuti if-satsen
 
         }
 
-        static void MainLogin()
+        static void MainLogin(string[] userNames, string[] passwords)
         {
             bool mainMenu = true;
             int loginAttempts = 2;
 
-
             while (mainMenu)
             {
-                string[] userNames = new string[] { "Fred", "Kjell", "Bo", "Tor", "Hel", "Bal" };
-                string[] passwords = new string[] { "123", "123456", "321" };
-                
+                //string[] userNames = new string[] { "Fred", "Kjell", "Bo", "Tor", "Hel", "Bal" };
+                //string[] passwords = new string[] { "123", "123456", "321" };
+
                 //bool contains = false;
                 Console.Write("Skriv in ditt användarnamn: ");
                 string user = Console.ReadLine(); // current user = användarnamnet som är i string-variabeln 'user' 
@@ -50,7 +51,7 @@ namespace sidoBanken
                         Console.WriteLine("Du loggades in!");
                         // anropa logged in
                         // nollställ loginattempts = 2
-                        LoggedIn();
+                        LoggedIn(i);
                         //flytta ut mainMenu = false utanför loopen
                         mainMenu = false;
                         break;
@@ -81,9 +82,11 @@ namespace sidoBanken
             }
         }
 
-        static void LoggedIn()
+        static void LoggedIn(int currentUser)
 
         {
+            int[] account1 = new int[] { 10000, 20000, 30000 };
+            int[] account2 = new int[] { 23232, 232323, 23223 };
             //Console.WriteLine("Du är inloggad!");
             //Console.WriteLine("Tryck på enter för att få menyval.");
             Console.WriteLine("1. Se dina konton och saldo\n2. Överföring mellan konton\n3. Ta ut pengar\n4. Logga ut");
@@ -95,10 +98,12 @@ namespace sidoBanken
                 case "1":
                     
                     Console.WriteLine("1. Se dina konton och saldo");
+
                     break;
                 case "2":
                     
                     Console.WriteLine("2. Överföring mellan konton");
+                    TransferMoney(account1, account2, currentUser);
                     break;
                 case "3":
                     
@@ -109,5 +114,12 @@ namespace sidoBanken
                     break;
             }
         }
+
+        static void TransferMoney(int[] account1, int[] account2, int currentUser)
+        {
+            Console.WriteLine("Account1 " + account1[currentUser]);
+            Console.ReadKey();
+        }
+
     } 
 }
