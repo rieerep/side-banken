@@ -56,7 +56,7 @@ namespace sidoBanken
                         mainMenu = false;
                         break;
                     }
-                    else
+                    /*else
                     {
                         loginAttempts--; // todo: flytta utanför for-loopen, så att alla konton kollas för en lyckas inloggning INNAN attempts minskar
                         Console.WriteLine("Invalid input");
@@ -65,13 +65,19 @@ namespace sidoBanken
                         Console.Write("Skriv in ditt lösenord: ");
                         pass = Console.ReadLine(); // current pass = lösenordet som är i string-variabeln 'pass'
                         
-                    }
+                    } */
 
                 }
-                // TODO: Här kan du veta om användaren ej lyckaades logga in
-                // minska loginattempts
-                // ge en ny chans om an har attempts kvar
-                
+                loginAttempts--; // todo: flytta utanför for-loopen, så att alla konton kollas för en lyckas inloggning INNAN attempts minskar
+                Console.WriteLine("Invalid input. Försök igen.");
+                Console.Write("Skriv in ditt användarnamn: ");
+                user = Console.ReadLine(); // current user = användarnamnet som är i string-variabeln 'user' 
+                Console.Write("Skriv in ditt lösenord: ");
+                pass = Console.ReadLine(); // current pass = lösenordet som är i string-variabeln 'pass'
+                                           // TODO: Här kan du veta om användaren ej lyckaades logga in
+                                           // minska loginattempts
+                                           // ge en ny chans om an har attempts kvar
+
                 if (loginAttempts == 0)
                 {
                     Console.WriteLine("Programmet stängs ner!");
@@ -82,6 +88,64 @@ namespace sidoBanken
             }
         }
 
+        /* static void MainLogin()
+        {
+            bool mainMenu = true;
+            int loginAttempts = 2;
+
+            while (mainMenu)
+            {
+                //string[] userNames = new string[] { "Fred", "Kjell", "Bo", "Tor", "Hel", "Bal" };
+                //string[] passwords = new string[] { "123", "123456", "321" };
+
+                //bool contains = false;
+                Console.Write("Skriv in ditt användarnamn: ");
+                string user = Console.ReadLine(); // current user = användarnamnet som är i string-variabeln 'user' 
+                Console.Write("Skriv in ditt lösenord: ");
+                string pass = Console.ReadLine(); // current pass = lösenordet som är i string-variabeln 'pass' 
+                for (int i = 0; i < passwords.Length; i++)
+                {
+                    //Console.WriteLine(userNames[i]);
+                    //Console.WriteLine(passwords[i]);
+
+                    if (user == userNames[i] && pass == passwords[i])
+                    {
+                        //contains = true;
+                        //Console.Clear();
+                        Console.WriteLine("Du loggades in!");
+                        // anropa logged in
+                        // nollställ loginattempts = 2
+                        LoggedIn(i);
+                        //flytta ut mainMenu = false utanför loopen
+                        mainMenu = false;
+                        break;
+                    }
+                    else
+                    {
+                        loginAttempts--; // todo: flytta utanför for-loopen, så att alla konton kollas för en lyckas inloggning INNAN attempts minskar
+                        Console.WriteLine("Invalid input");
+                        Console.Write("Skriv in ditt användarnamn: ");
+                        user = Console.ReadLine(); // current user = användarnamnet som är i string-variabeln 'user' 
+                        Console.Write("Skriv in ditt lösenord: ");
+                        pass = Console.ReadLine(); // current pass = lösenordet som är i string-variabeln 'pass'
+
+                    }
+
+                }
+                // TODO: Här kan du veta om användaren ej lyckaades logga in
+                // minska loginattempts
+                // ge en ny chans om an har attempts kvar
+
+                if (loginAttempts == 0)
+                {
+                    Console.WriteLine("Programmet stängs ner!");
+                    Console.ReadLine();
+                    // todo: stängs programmet verkligen ner? Vad avgör?
+                }
+
+            }
+        } */
+
         static void LoggedIn(int currentUser)
 
         {
@@ -91,8 +155,9 @@ namespace sidoBanken
             //Console.WriteLine("Tryck på enter för att få menyval.");
             Console.WriteLine("1. Se dina konton och saldo\n2. Överföring mellan konton\n3. Ta ut pengar\n4. Logga ut");
             string userChoice = Console.ReadLine();
-            int nrChoice = int.Parse(userChoice); 
-
+            int nrChoice = int.Parse(userChoice);
+            bool loggedIn = true;
+            while (loggedIn)
             switch (userChoice)
             {
                 case "1":
@@ -107,11 +172,15 @@ namespace sidoBanken
                     break;
                 case "3":
                     
-                    Console.WriteLine("3. Ta ut pengar");
+                    Console.WriteLine("3. Ta ut pengar"); 
                     break;
-                default:
+                case "4":
                     Console.WriteLine("4. Logga ut");
                     break;
+
+                default:
+                    Console.WriteLine("Gör något av ovanstående val");
+                        continue;
             }
         }
 
