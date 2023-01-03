@@ -8,10 +8,15 @@ using System.Threading.Tasks;
 namespace sidoBanken
 {
     internal class Program
-    {
+    { 
         static void Main(string[] args)
         {
-            
+            Users user1 = new Users("Fred", "123");
+            Users user2 = new Users("Kjell", "321");
+            Users user3 = new Users("Bo", "321");
+
+            Users[] users = new Users[] {user1, user2, user3};
+
             string[] userNames = new string[] { "Fred", "Kjell", "Bo", "Tor", "Hel", "Bal" };
             string[] passwords = new string[] { "123", "123456", "321" };
             int[] account1 = new int[] { 10000, 20000, 30000 };
@@ -27,10 +32,11 @@ namespace sidoBanken
         static void MainLogin(string[] userNames, string[] passwords)
         {
             bool mainMenu = true;
-            int loginAttempts = 2;
+            int loginAttempts = 3;
 
             while (mainMenu)
             {
+                
                 //string[] userNames = new string[] { "Fred", "Kjell", "Bo", "Tor", "Hel", "Bal" };
                 //string[] passwords = new string[] { "123", "123456", "321" };
 
@@ -51,7 +57,7 @@ namespace sidoBanken
                         Console.WriteLine("Du loggades in!");
                         // anropa logged in
                         // nollställ loginattempts = 2
-                        LoggedIn(i);
+                        LoggedIn(i, userNames, passwords);
                         //flytta ut mainMenu = false utanför loopen
                         mainMenu = false;
                         break;
@@ -69,7 +75,7 @@ namespace sidoBanken
 
                 }
                 loginAttempts--; // todo: flytta utanför for-loopen, så att alla konton kollas för en lyckas inloggning INNAN attempts minskar
-                Console.WriteLine("Invalid input. Försök igen.");
+                Console.WriteLine("Invalid input. Försök igen. Försök kvar:" + loginAttempts);
                 Console.Write("Skriv in ditt användarnamn: ");
                 user = Console.ReadLine(); // current user = användarnamnet som är i string-variabeln 'user' 
                 Console.Write("Skriv in ditt lösenord: ");
@@ -80,7 +86,7 @@ namespace sidoBanken
 
                 if (loginAttempts == 0)
                 {
-                    Console.WriteLine("Programmet stängs ner!");
+                    Console.WriteLine("Dina inloggningsförsök har tagit slut.Programmet stängs ner!");
                     Console.ReadLine();
                     // todo: stängs programmet verkligen ner? Vad avgör?
                 }              
@@ -146,7 +152,7 @@ namespace sidoBanken
             }
         } */
 
-        static void LoggedIn(int currentUser)
+        static void LoggedIn(int currentUser, string[] array, string[] array2)
 
         {
             int[] account1 = new int[] { 10000, 20000, 30000 };
@@ -161,21 +167,22 @@ namespace sidoBanken
             switch (userChoice)
             {
                 case "1":
-                    
                     Console.WriteLine("1. Se dina konton och saldo");
-
                     break;
+
                 case "2":
-                    
                     Console.WriteLine("2. Överföring mellan konton");
                     TransferMoney(account1, account2, currentUser);
                     break;
                 case "3":
-                    
-                    Console.WriteLine("3. Ta ut pengar"); 
+                    Console.WriteLine("3. Ta ut pengar");
+                        loggedIn= false;
+                        Withdraw();
                     break;
+
                 case "4":
                     Console.WriteLine("4. Logga ut");
+                        MainLogin(array, array2);
                     break;
 
                 default:
@@ -187,6 +194,12 @@ namespace sidoBanken
         static void TransferMoney(int[] account1, int[] account2, int currentUser)
         {
             Console.WriteLine("Account1 " + account1[currentUser]);
+            Console.ReadKey();
+        }
+
+        static void Withdraw() // Kom åt användarens olika konton på något sätt
+        {
+            Console.WriteLine("Du vill ta ut pengar");
             Console.ReadKey();
         }
 
