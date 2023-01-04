@@ -102,6 +102,61 @@ namespace sidoBanken
             Console.WriteLine("Kvarstående saldo: " );
          
         }
+
+        static void transferMoney(string[] accounts, double[] balances)
+        {
+
+            // steg 1. Be användaren välja ett konto att flytta pengar från
+            // steg 2. Be användaren skriva in en summa att flytta 
+            // steg 3. Ta bort den summan från kontot, visa kvarkvarande saldo  
+            Console.WriteLine("Välj ett konto att flytta pengar ifrån: ");
+            for (int index = 0; index < accounts.Length; index++)
+            {
+                /* for (int j = 0; j < accounts.Length; j++)
+                 {
+                     Console.WriteLine(balances[j]);
+                 } */
+                Console.WriteLine($"{index + 1} {accounts[index]} {balances[index]} index: {index}");
+            }
+            Console.Write("===> ");
+            string amountFrom = Console.ReadLine();
+            Console.WriteLine($"Du valde {amountFrom}");
+
+            Console.WriteLine("Välj ett konto att sätta in pengar på: ");
+            for (int index = 0; index < accounts.Length; index++)
+            {
+                /* for (int j = 0; j < accounts.Length; j++)
+                 {
+                     Console.WriteLine(balances[j]);
+                 } */
+                Console.WriteLine($"{index + 1} {accounts[index]} {balances[index]} index: {index}");
+            }
+            Console.Write("===> ");
+            string userInput = Console.ReadLine();
+            Console.WriteLine($"Du valde {userInput}");
+
+
+            // Omvandla userInput till en int minus 1
+            int userChoice = int.Parse(userInput) - 1;
+            Console.WriteLine($"Ange en summa mellan 1 och {balances[userChoice]}");
+            Console.Write("===> ");
+            userInput = Console.ReadLine();
+            int userAmount = int.Parse(userInput);
+            // kolla om användaren har täckning på kontot
+
+            if (userAmount > balances[userChoice])
+            {
+                Console.WriteLine("Du har inte så mycket pengar");
+            }
+            else
+            {
+
+                balances[userChoice] -= userAmount;
+                Console.WriteLine($"Saldo {balances[userChoice]}");
+            }
+            Console.WriteLine("Kvarstående saldo: ");
+
+        }
         static void MainLogin(string[] userArray, string[] passwordArray, string[][] accountArray, double[][] balanceArray)
         {
             bool mainMenu = true;
@@ -250,7 +305,7 @@ namespace sidoBanken
 
                     case "2":
                         Console.WriteLine("2. Överföring mellan konton");
-                        //TransferMoney(account1, account2, currentUser);
+                        transferMoney(accountArray[currentUserIndex], balanceArray[currentUserIndex]);
                         break;
                     case "3":
                         Console.WriteLine("3. Ta ut pengar");
