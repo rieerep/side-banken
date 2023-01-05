@@ -30,3 +30,11 @@ C:\Users\edrac\Documents\Chas-Academy\C-Sharp\side-banken\sidoBanken\obj\Debug\s
 C:\Users\edrac\Documents\Chas-Academy\C-Sharp\side-banken\sidoBanken\obj\Debug\sidoBanken.csproj.CoreCompileInputs.cache
 C:\Users\edrac\Documents\Chas-Academy\C-Sharp\side-banken\sidoBanken\obj\Debug\sidoBanken.exe
 C:\Users\edrac\Documents\Chas-Academy\C-Sharp\side-banken\sidoBanken\obj\Debug\sidoBanken.pdb
+C:\Users\Rickard\Documents\Chas-Academy-projekt\Ny mapp\side-banken\sidoBanken\bin\Debug\sidoBanken.exe.config
+C:\Users\Rickard\Documents\Chas-Academy-projekt\Ny mapp\side-banken\sidoBanken\bin\Debug\sidoBanken.exe
+C:\Users\Rickard\Documents\Chas-Academy-projekt\Ny mapp\side-banken\sidoBanken\bin\Debug\sidoBanken.pdb
+C:\Users\Rickard\Documents\Chas-Academy-projekt\Ny mapp\side-banken\sidoBanken\obj\Debug\sidoBanken.csproj.AssemblyReference.cache
+C:\Users\Rickard\Documents\Chas-Academy-projekt\Ny mapp\side-banken\sidoBanken\obj\Debug\sidoBanken.csproj.SuggestedBindingRedirects.cache
+C:\Users\Rickard\Documents\Chas-Academy-projekt\Ny mapp\side-banken\sidoBanken\obj\Debug\sidoBanken.csproj.CoreCompileInputs.cache
+C:\Users\Rickard\Documents\Chas-Academy-projekt\Ny mapp\side-banken\sidoBanken\obj\Debug\sidoBanken.exe
+C:\Users\Rickard\Documents\Chas-Academy-projekt\Ny mapp\side-banken\sidoBanken\obj\Debug\sidoBanken.pdb

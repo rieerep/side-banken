@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,9 +63,11 @@ namespace sidoBanken
 
         }
 
-        static void withdrawMoney(string[] accounts, double[] balances)
+        static void withdrawMoney(string[] accounts, double[] balances, string password) // ToDo: skicka in inloggad användares pinkod i metoden
         {
-
+            Console.WriteLine("pw: " + password);
+            
+            
             // steg 1. Be användaren välja ett konto att ta ut pengar ifrån
             // steg 2. Be användaren skriva in en summa att ta ut 
             // steg 3. Ta bort den summan från kontot, visa kvarkvarande saldo
@@ -87,9 +90,19 @@ namespace sidoBanken
             Console.WriteLine($"Ange en summa mellan 1 och {balances[userChoice]}");
             Console.Write("===> ");
             userInput = Console.ReadLine();
-            int userAmount = int.Parse(userInput);
+            double userAmount = double.Parse(userInput);
             // kolla om användaren har täckning på kontot
 
+            Console.Write("Skriv in din pin");
+            string inputPw = Console.ReadLine();
+            if (inputPw == password)
+            {
+                Console.WriteLine("Rätt pin");
+            }
+            else
+            {
+                return;
+            }
             if (userAmount > balances[userChoice])
             {
                 Console.WriteLine("Du har inte så mycket pengar");
@@ -120,16 +133,19 @@ namespace sidoBanken
             }
             Console.Write("===> ");
             string amountFrom = Console.ReadLine();
+            int userChoiceFrom = int.Parse(amountFrom) - 1;
             Console.WriteLine($"Du valde {amountFrom}");
 
             Console.WriteLine("Välj ett konto att sätta in pengar på: ");
             for (int index = 0; index < accounts.Length; index++)
             {
-                /* for (int j = 0; j < accounts.Length; j++)
-                 {
-                     Console.WriteLine(balances[j]);
-                 } */
-                Console.WriteLine($"{index + 1} {accounts[index]} {balances[index]} index: {index}");
+                // Om index inte är lika med indexet användaren angav tidigare
+                // ... skriv ut nedanstående
+                if (index != userChoiceFrom)
+                {
+                    Console.WriteLine($"{index + 1} {accounts[index]} {balances[index]} index: {index}");
+                }
+                
             }
             Console.Write("===> ");
             string userInput = Console.ReadLine();
@@ -137,24 +153,25 @@ namespace sidoBanken
 
 
             // Omvandla userInput till en int minus 1
-            int userChoice = int.Parse(userInput) - 1;
-            Console.WriteLine($"Ange en summa mellan 1 och {balances[userChoice]}");
+            int userChoiceTo = int.Parse(userInput) - 1;
+            Console.WriteLine($"Ange en summa mellan 1 och {balances[userChoiceFrom]}");
             Console.Write("===> ");
             userInput = Console.ReadLine();
-            int userAmount = int.Parse(userInput);
+            double userAmount = double.Parse(userInput);
             // kolla om användaren har täckning på kontot
 
-            if (userAmount > balances[userChoice])
+            if (userAmount > balances[userChoiceFrom])
             {
                 Console.WriteLine("Du har inte så mycket pengar");
             }
             else
             {
-
-                balances[userChoice] -= userAmount;
-                Console.WriteLine($"Saldo {balances[userChoice]}");
+                balances[userChoiceFrom] -= userAmount;
+                balances[userChoiceTo] += userAmount;
+                // Console.WriteLine($"Saldo, choice from: {balances[userChoiceFrom]}, choice to: {balances[userChoiceTo]}");
+                Console.WriteLine($"{accounts[userChoiceFrom]} {balances[userChoiceFrom]}");
+                Console.WriteLine($"{accounts[userChoiceTo]} {balances[userChoiceTo]}");
             }
-            Console.WriteLine("Kvarstående saldo: ");
 
         }
         static void MainLogin(string[] userArray, string[] passwordArray, string[][] accountArray, double[][] balanceArray)
@@ -216,6 +233,7 @@ namespace sidoBanken
                 if (loginAttempts == 0)
                 {
                     Console.WriteLine("Dina inloggningsförsök har tagit slut.Programmet stängs ner!");
+                    mainMenu = false;
                     Console.ReadLine();
                     // todo: stängs programmet verkligen ner? Vad avgör?
                 }              
@@ -309,7 +327,7 @@ namespace sidoBanken
                         break;
                     case "3":
                         Console.WriteLine("3. Ta ut pengar");
-                        withdrawMoney(accountArray[currentUserIndex], balanceArray[currentUserIndex]);
+                        withdrawMoney(accountArray[currentUserIndex], balanceArray[currentUserIndex], passwordArray[currentUserIndex]);
                         break;
 
                     case "4":
@@ -325,18 +343,6 @@ namespace sidoBanken
                 }
             }
             
-        }
-
-        static void TransferMoney(int[] account1, int[] account2, int currentUser)
-        {
-            Console.WriteLine("Account1 " + account1[currentUser]);
-            Console.ReadKey();
-        }
-
-        static void Withdraw() // Kom åt användarens olika konton på något sätt
-        {
-            Console.WriteLine("Du vill ta ut pengar");
-            Console.ReadKey();
         }
 
     } 
