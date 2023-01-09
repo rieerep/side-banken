@@ -12,8 +12,14 @@ namespace sidoBanken
     internal class Program
     {
         static void Main(string[] args)
-        {            
+        {
+            bool parseCheck;
+            double a;
+            Console.WriteLine("skriv in en siffra: ");
+            string userInput = Console.ReadLine();
 
+            parseCheck = double.TryParse(userInput, out a);
+            Console.WriteLine("Strängen är en numerisk datatyp: " + parseCheck);
             // TODO: 
             Users user1 = new Users("Fred", "123");
             Users user2 = new Users("Kjell", "321");
@@ -99,11 +105,11 @@ namespace sidoBanken
             double userAmount = double.Parse(userInput);
             // kolla om användaren har täckning på kontot
 
-            Console.Write("Skriv in din pin");
+            Console.Write("Skriv in din pin: ");
             string inputPw = Console.ReadLine();
             if (inputPw == password)
             {
-                Console.WriteLine("Rätt pin");
+                Console.WriteLine("Rätt pin!");
             }
             else
             {
@@ -112,14 +118,22 @@ namespace sidoBanken
             if (userAmount > balances[userChoice])
             {
                 Console.WriteLine("Du har inte så mycket pengar");
-            } else
+            }
+            else if (userAmount <= 0) // Todo: Shorthand med två uttryck och ett frågetecken
+            {
+                Console.WriteLine($"Värdet måste vara större än noll (0)");
+                return;
+            }
+                else
             {
 
                 balances[userChoice] -= userAmount;
                 Console.WriteLine($"Saldo {balances[userChoice]}");
             }
-            Console.WriteLine("Kvarstående saldo: " );
-         
+            Console.WriteLine("Tryck [Enter] för att komma till huvudmenyn");
+            Console.ReadKey();
+            return;
+
         }
 
         static void transferMoney(string[] accounts, double[] balances)
@@ -178,6 +192,8 @@ namespace sidoBanken
                 Console.WriteLine($"{accounts[userChoiceFrom]} {balances[userChoiceFrom]}");
                 Console.WriteLine($"{accounts[userChoiceTo]} {balances[userChoiceTo]}");
             }
+            Console.WriteLine("Tryck [Enter] för att komma till huvudmenyn");
+            Console.ReadKey();
 
         }
         static void MainLogin(string[] userArray, string[] passwordArray, string[][] accountArray, double[][] balanceArray)
@@ -210,7 +226,7 @@ namespace sidoBanken
                         // nollställ loginattempts = 2
                         
                         LoggedIn(i, userArray, passwordArray, accountArray, balanceArray);
-                        mainMenu= false;
+                        //mainMenu= false;
                         return; // Varför fungerar detta?
 
                         //flytta ut mainMenu = false utanför loopen
@@ -261,6 +277,7 @@ namespace sidoBanken
             bool loggedIn = true;
             while (loggedIn)
             {
+                Console.WriteLine("Gör ditt val med knapparna 1-4");
                 Console.WriteLine("1. Se dina konton och saldo\n2. Överföring mellan konton\n3. Ta ut pengar\n4. Logga ut");
 
                 string userChoice = Console.ReadLine();
@@ -288,9 +305,10 @@ namespace sidoBanken
                         break;
 
                     default:
-                        Console.WriteLine("Gör något av ovanstående val");
+                        Console.WriteLine("Ogiltigt menyval. Gör val med siffra 1-4");
                         continue;
                 }
+                continue;
             }
             
         }
