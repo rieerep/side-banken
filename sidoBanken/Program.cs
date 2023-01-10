@@ -17,7 +17,7 @@ namespace sidoBanken
             double a;
             Console.WriteLine("skriv in en siffra: ");
             string userInput = Console.ReadLine();
-
+             
             parseCheck = double.TryParse(userInput, out a);
             Console.WriteLine("Strängen är en numerisk datatyp: " + parseCheck);
             // TODO: 
@@ -27,7 +27,7 @@ namespace sidoBanken
 
             Users[] users = new Users[] { user1, user2, user3 };
 
-            string[] userNames = new string[] { "Inky", "Blinky", "Pinky", "Clyde", "Pac", "Man" };
+            string[] userNames = new string[] { "inky", "blinky", "pinky", "clyde", "pac", "man" };
             string[] passwords = new string[] { "1891", "1981", "6666", "7777", "1234", "0159" };
             string[][] accountNames = new string[][] {
                 new string[] { "SparkontoI", "LönekontoI" },
@@ -209,7 +209,9 @@ namespace sidoBanken
 
                 //bool contains = false;
                 Console.Write("Skriv in ditt användarnamn: ");
-                string user = Console.ReadLine(); // current user = användarnamnet som är i string-variabeln 'user' 
+                string inputFromUser = Console.ReadLine();
+                string user = inputFromUser.ToLower();
+                //string user = Console.ReadLine(); // current user = användarnamnet som är i string-variabeln 'user' 
                 Console.Write("Skriv in din pinkod: ");
                 string pass = Console.ReadLine(); // current pass = lösenordet som är i string-variabeln 'pass' 
                 for (int i = 0; i < passwordArray.Length; i++)
@@ -308,7 +310,6 @@ namespace sidoBanken
                         Console.WriteLine("Ogiltigt menyval. Gör val med siffra 1-4");
                         continue;
                 }
-                continue;
             }
             
         }
