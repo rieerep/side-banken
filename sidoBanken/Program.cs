@@ -214,6 +214,9 @@ namespace sidoBanken
                 //string user = Console.ReadLine(); // current user = användarnamnet som är i string-variabeln 'user' 
                 Console.Write("Skriv in din pinkod: ");
                 string pass = Console.ReadLine(); // current pass = lösenordet som är i string-variabeln 'pass' 
+                int logtest = 0;
+
+
                 for (int i = 0; i < passwordArray.Length; i++)
                 {
                     //Console.WriteLine(userNames[i]);
@@ -221,6 +224,7 @@ namespace sidoBanken
 
                     if (user == userArray[i] && pass == passwordArray[i])
                     {
+                        logtest = 1;
                         //contains = true;
                         //Console.Clear();
                         Console.WriteLine("Du loggades in!");
@@ -229,7 +233,7 @@ namespace sidoBanken
                         
                         LoggedIn(i, userArray, passwordArray, accountArray, balanceArray);
                         //mainMenu= false;
-                        return; // Varför fungerar detta?
+                        break; // Varför fungerar detta?
 
                         //flytta ut mainMenu = false utanför loopen
 
@@ -246,9 +250,13 @@ namespace sidoBanken
                     } */
 
                 }
-                loginAttempts--; // todo: flytta utanför for-loopen, så att alla konton kollas för en lyckas inloggning INNAN attempts minskar
-                if (loginAttempts > 0) {
-                    Console.WriteLine("Invalid input. Försök igen. Försök kvar:" + loginAttempts);
+                if (logtest == 0)
+                {
+                    loginAttempts--; // todo: flytta utanför for-loopen, så att alla konton kollas för en lyckas inloggning INNAN attempts minskar 
+                    if (loginAttempts > 0)
+                    {
+                        Console.WriteLine("Invalid input. Försök igen. Försök kvar:" + loginAttempts);
+                    }
                 }
                 //user = Console.ReadLine(); // current user = användarnamnet som är i string-variabeln 'user' 
                 //Console.Write("Skriv in ditt lösenord: ");

@@ -1,2 +1,7 @@
 .vs/
 side-banken/.vs
+# Ignore any files in /bin and /obj Folders
+**/bin/*
+**/obj/*
+sidobanken/bin/*
+sidobanken/obj/*
