@@ -13,6 +13,16 @@ namespace sidoBanken
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Tryck på Enter");
+            ConsoleKeyInfo info = Console.ReadKey();
+            if (info.Key == ConsoleKey.Enter)
+            {
+                Console.WriteLine("Du tröck på enter!");
+            } else
+            {
+                Console.WriteLine("FELAktIG INmatniNg");
+            }
+
             bool parseCheck;
             double a;
             Console.WriteLine("skriv in en siffra: ");
@@ -58,21 +68,31 @@ namespace sidoBanken
 
         static void showAccounts(string[] accounts, double[] balances)
         {
+
+                for (int index = 0; index < accounts.Length; index++)
+                {
+                    /* for (int j = 0; j < accounts.Length; j++)
+                     {
+                         Console.WriteLine(balances[j]);
+                     } */
+                    Console.WriteLine(accounts[index] + ": " + balances[index]);
+
+                }
+            bool inputCheck = true;
+            do
+            {
+                Console.WriteLine("\nTryck [Enter] för att komma till huvudmenyn");
+                Console.Write("=====>");
+                ConsoleKeyInfo info = Console.ReadKey();
+                if (info.Key == ConsoleKey.Enter)
+                {
+                    inputCheck = false;
+                }
+                else Console.WriteLine("Felaktig inmatning");
+            } while (inputCheck == true);
             // steg 1. skriv e for loop som loopar igenom accounts och skriver ut den
             // steg 2. skriv även ut samma index ur balances, OBS i samma for loop
-            for (int index = 0; index < accounts.Length; index++)
-            {
-               /* for (int j = 0; j < accounts.Length; j++)
-                {
-                    Console.WriteLine(balances[j]);
-                } */
-                Console.WriteLine(accounts[index] + ": " + balances[index]);
-                
-            }
-            Console.WriteLine("Tryck [Enter] för att komma till huvudmenyn");
-            Console.ReadKey();
-
-
+            
         }
 
         static void withdrawMoney(string[] accounts, double[] balances, string password) // ToDo: skicka in inloggad användares pinkod i metoden
@@ -130,8 +150,18 @@ namespace sidoBanken
                 balances[userChoice] -= userAmount;
                 Console.WriteLine($"Saldo {balances[userChoice]}");
             }
-            Console.WriteLine("Tryck [Enter] för att komma till huvudmenyn");
-            Console.ReadKey();
+            bool inputCheck = true;
+            do
+            {
+                Console.WriteLine("\nTryck [Enter] för att komma till huvudmenyn");
+                Console.Write("=====>");
+                ConsoleKeyInfo info = Console.ReadKey();
+                if (info.Key == ConsoleKey.Enter)
+                {
+                    inputCheck = false;
+                }
+                else Console.WriteLine("Felaktig inmatning");
+            } while (inputCheck == true);
             return;
 
         }
@@ -224,6 +254,7 @@ namespace sidoBanken
 
                     if (user == userArray[i] && pass == passwordArray[i])
                     {
+                        loginAttempts = 3;
                         logtest = 1;
                         //contains = true;
                         //Console.Clear();
