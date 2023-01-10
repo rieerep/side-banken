@@ -65,16 +65,15 @@ namespace sidoBanken
             //LoggedIn(); // todo: flytta in till inuti if-satsen
 
         }
-
+        static string formatMoney(double amount)
+        {
+            return String.Format("{0:.00}", amount);
+        }
         static void showAccounts(string[] accounts, double[] balances)
         {
 
                 for (int index = 0; index < accounts.Length; index++)
                 {
-                    /* for (int j = 0; j < accounts.Length; j++)
-                     {
-                         Console.WriteLine(balances[j]);
-                     } */
                     Console.WriteLine(accounts[index] + ": " + balances[index]);
 
                 }
@@ -95,6 +94,8 @@ namespace sidoBanken
             
         }
 
+        // Formatera string-inputs från användare, för att bara visa två decimaler
+        
         static void withdrawMoney(string[] accounts, double[] balances, string password) // ToDo: skicka in inloggad användares pinkod i metoden
         {
             Console.WriteLine("pw: " + password);
@@ -148,7 +149,7 @@ namespace sidoBanken
             {
 
                 balances[userChoice] -= userAmount;
-                Console.WriteLine($"Saldo {balances[userChoice]}");
+                Console.WriteLine($"Saldo {formatMoney(balances[userChoice])}");
             }
             bool inputCheck = true;
             do
@@ -205,9 +206,12 @@ namespace sidoBanken
             // Omvandla userInput till en int minus 1
             int userChoiceTo = int.Parse(userInput) - 1;
             Console.WriteLine($"Ange en summa mellan 1 och {balances[userChoiceFrom]}");
+            
             Console.Write("===> ");
             userInput = Console.ReadLine();
             double userAmount = double.Parse(userInput);
+            //var userAmount2= formatMoney(userAmount);
+            Console.WriteLine("Formatting test:" + formatMoney(userAmount));
             // kolla om användaren har täckning på kontot
 
             if (userAmount > balances[userChoiceFrom])
@@ -216,11 +220,14 @@ namespace sidoBanken
             }
             else
             {
+                // todo: välj konto från inloggad user att skicka från
+                // välj mottagar-user i listan .konto hos mottagare att få pengar till
+                // 
                 balances[userChoiceFrom] -= userAmount;
                 balances[userChoiceTo] += userAmount;
                 // Console.WriteLine($"Saldo, choice from: {balances[userChoiceFrom]}, choice to: {balances[userChoiceTo]}");
-                Console.WriteLine($"{accounts[userChoiceFrom]} {balances[userChoiceFrom]}");
-                Console.WriteLine($"{accounts[userChoiceTo]} {balances[userChoiceTo]}");
+                Console.WriteLine($"{accounts[userChoiceFrom]} {formatMoney(balances[userChoiceFrom])}");
+                Console.WriteLine($"{accounts[userChoiceTo]} {formatMoney(balances[userChoiceTo])}");
             }
             Console.WriteLine("Tryck [Enter] för att komma till huvudmenyn");
             Console.ReadKey();
