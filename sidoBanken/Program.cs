@@ -13,30 +13,24 @@ namespace sidoBanken
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Tryck på Enter");
-            ConsoleKeyInfo info = Console.ReadKey();
-            if (info.Key == ConsoleKey.Enter)
-            {
-                Console.WriteLine("Du tröck på enter!");
-            } else
-            {
-                Console.WriteLine("FELAktIG INmatniNg");
-            }
+            String A = "Fred";
+            String B = "fReD";
 
-            bool parseCheck;
-            double a;
-            Console.WriteLine("skriv in en siffra: ");
-            string userInput = Console.ReadLine();
-             
-            parseCheck = double.TryParse(userInput, out a);
-            Console.WriteLine("Strängen är en numerisk datatyp: " + parseCheck);
-            // TODO: 
+            if(String.Equals(A, B) == true)
+                Console.WriteLine("Sant!");
+            else
+                Console.WriteLine("Falskt!");
+
             Users user1 = new Users("Fred", "123");
             Users user2 = new Users("Kjell", "321");
             Users user3 = new Users("Bo", "321");
 
             Users[] users = new Users[] { user1, user2, user3 };
 
+
+            // Hårdkodat in användare och lösenord i varsin array
+            // Då deras antal konton skiljer sig används en jagged array för att tilldela mängden konton
+            // Ytterligare en jagged array används för att tilldela varje konton ett saldo (balances)
             string[] userNames = new string[] { "inky", "blinky", "pinky", "clyde", "pac", "man" };
             string[] passwords = new string[] { "1891", "1981", "6666", "7777", "1234", "0159" };
             string[][] accountNames = new string[][] {
@@ -44,44 +38,37 @@ namespace sidoBanken
                 new string[] { "SparkontoB", "LönekontoB", "ISK-B" },
                 new string[] { "SparkontoP", "LönekontoP", "ISK-P", "Ädelmetaller" },
                 new string[] { "SparkontoC", "LönekontoC", "ISK-C", "ISK", "ISK" },
-                new string[] { "SparkontoPa", "LönekontoPac", "ISK-Pa", "ISK", "ISK", "ISK" },
+                new string[] { "SparkontoPa", "LönekontoPac", "ISK-Pa", "Pensionsspar", "Resekonto", "ISK" },
                 new string[] { "SparkontoMa", "LönekontoMa", "ISK-Ma", "Sparkonto 2", "ISK", "ISK", "ISK" }
             };
             double[][] accountBalances = new double[][] {
-             new double[] { 2001, 5000.1 },
-             new double[] { 2002, 5000, 1000 },
-             new double[] { 2003, 5000, 5000, 1000 },
-             new double[] { 2004, 5000, 5000, 1000, 5000 },
-             new double[] { 2005, 5000, 5000, 1000, 5000, 1000 },
-             new double[] { 2006, 5000, 5000, 1000, 5000, 1000, 5000 }
-        };
+             new double[] { 2001, 5000 },
+             new double[] { 2002, 2000, 1000 },
+             new double[] { 2003, 3987, 5000, 1000 },
+             new double[] { 2004, 40000, 5000, 1000, 5000 },
+             new double[] { 2005, 5550, 5000, 1000, 5000, 1000 },
+             new double[] { 2006, 6786.77, 5000, 1000, 65478, 63789, 6666 } };
             
-         //   int[] account1 = new int[] { 10000, 20000, 30000 };
-         //   int[] account2 = new int[] { 23232, 232323, 23223 };
-            //string currentUser = Console.ReadLine();
-            //string currentPassword = Console.ReadLine();
             Console.WriteLine("Välkommen till banken!");
             MainLogin(userNames, passwords, accountNames, accountBalances);
-            //LoggedIn(); // todo: flytta in till inuti if-satsen
-
         }
-        static string formatMoney(double amount)
+
+        
+        static string formatMoney(double amount) // Funktion som används för att endast visa användaren två decimaler.
         {
             return String.Format("{0:.00}", amount);
         }
         static void showAccounts(string[] accounts, double[] balances)
         {
-
                 for (int index = 0; index < accounts.Length; index++)
                 {
-                    Console.WriteLine(accounts[index] + ": " + balances[index]);
-
-                }
+                    Console.WriteLine(accounts[index] + ": " + balances[index] + " kr");
+            }
             bool inputCheck = true;
             do
             {
                 Console.WriteLine("\nTryck [Enter] för att komma till huvudmenyn");
-                Console.Write("=====>");
+                Console.WriteLine("=====>");
                 ConsoleKeyInfo info = Console.ReadKey();
                 if (info.Key == ConsoleKey.Enter)
                 {
@@ -105,14 +92,12 @@ namespace sidoBanken
             // steg 2. Be användaren skriva in en summa att ta ut 
             // steg 3. Ta bort den summan från kontot, visa kvarkvarande saldo
             Console.WriteLine("Välj ett konto att ta ut pengar ifrån: ");
+            
             for (int index = 0; index < accounts.Length; index++)
             {
-                /* for (int j = 0; j < accounts.Length; j++)
-                 {
-                     Console.WriteLine(balances[j]);
-                 } */
-                Console.WriteLine($"{index + 1} {accounts[index]} {balances[index]} index: {index}");
+                Console.WriteLine($"{index + 1} {accounts[index]} {balances[index] } kr (index: {index})");
             }
+
             Console.Write("===> ");
             string userInput = Console.ReadLine();
             Console.WriteLine($"Du valde {userInput}");
@@ -144,12 +129,10 @@ namespace sidoBanken
             {
                 Console.WriteLine($"Värdet måste vara större än noll (0)");
                 return;
-            }
-                else
+            }else
             {
-
                 balances[userChoice] -= userAmount;
-                Console.WriteLine($"Saldo {formatMoney(balances[userChoice])}");
+                Console.WriteLine($"Saldo {formatMoney(balances[userChoice])} kr");
             }
             bool inputCheck = true;
             do
@@ -164,9 +147,11 @@ namespace sidoBanken
                 else Console.WriteLine("Felaktig inmatning");
             } while (inputCheck == true);
             return;
-
         }
 
+
+        // Den här metoden tillåter användaren att ta ut pengar från sitt konto.
+        // 
         static void transferMoney(string[] accounts, double[] balances)
         {
 
@@ -176,11 +161,7 @@ namespace sidoBanken
             Console.WriteLine("Välj ett konto att flytta pengar ifrån: ");
             for (int index = 0; index < accounts.Length; index++)
             {
-                /* for (int j = 0; j < accounts.Length; j++)
-                 {
-                     Console.WriteLine(balances[j]);
-                 } */
-                Console.WriteLine($"{index + 1} {accounts[index]} {balances[index]} index: {index}");
+                Console.WriteLine($"{index + 1} {accounts[index]} {balances[index]} SEK index: {index}");
             }
             Console.Write("===> ");
             string amountFrom = Console.ReadLine();
@@ -233,6 +214,9 @@ namespace sidoBanken
             Console.ReadKey();
 
         }
+
+        // Metoden MainLogin tar in all inloggningsinformation och testar dessa med användarens input
+        // Skickar sedan vidare vid lyckad inloggning
         static void MainLogin(string[] userArray, string[] passwordArray, string[][] accountArray, double[][] balanceArray)
         {
             bool mainMenu = true;
@@ -240,10 +224,6 @@ namespace sidoBanken
            
             while (mainMenu)
             {
-                
-                //string[] userNames = new string[] { "Fred", "Kjell", "Bo", "Tor", "Hel", "Bal" };
-                //string[] passwords = new string[] { "123", "123456", "321" };
-
                 //bool contains = false;
                 Console.Write("Skriv in ditt användarnamn: ");
                 string inputFromUser = Console.ReadLine();
@@ -263,50 +243,29 @@ namespace sidoBanken
                     {
                         loginAttempts = 3;
                         logtest = 1;
-                        //contains = true;
-                        //Console.Clear();
                         Console.WriteLine("Du loggades in!");
-                        // anropa logged in
-                        // nollställ loginattempts = 2
-                        
+
                         LoggedIn(i, userArray, passwordArray, accountArray, balanceArray);
                         //mainMenu= false;
                         break; // Varför fungerar detta?
 
-                        //flytta ut mainMenu = false utanför loopen
-
                     }
-                    /*else
-                    {
-                        loginAttempts--; // todo: flytta utanför for-loopen, så att alla konton kollas för en lyckas inloggning INNAN attempts minskar
-                        Console.WriteLine("Invalid input");
-                        Console.Write("Skriv in ditt användarnamn: ");
-                        user = Console.ReadLine(); // current user = användarnamnet som är i string-variabeln 'user' 
-                        Console.Write("Skriv in ditt lösenord: ");
-                        pass = Console.ReadLine(); // current pass = lösenordet som är i string-variabeln 'pass'
-                        
-                    } */
 
                 }
                 if (logtest == 0)
                 {
-                    loginAttempts--; // todo: flytta utanför for-loopen, så att alla konton kollas för en lyckas inloggning INNAN attempts minskar 
+                    loginAttempts--;
                     if (loginAttempts > 0)
                     {
                         Console.WriteLine("Invalid input. Försök igen. Försök kvar:" + loginAttempts);
                     }
                 }
-                //user = Console.ReadLine(); // current user = användarnamnet som är i string-variabeln 'user' 
-                //Console.Write("Skriv in ditt lösenord: ");
-                //pass = Console.ReadLine(); // current pass = lösenordet som är i string-variabeln 'pass'
-                // TODO: Här kan du veta om användaren ej lyckaades logga in
-                // minska loginattempts
-                // ge en ny chans om an har attempts kvar
 
                 if (loginAttempts == 0)
                 {
                     Console.WriteLine("Dina inloggningsförsök har tagit slut.Programmet stängs ner!");
                     mainMenu = false;
+                    System.Environment.Exit(0);
                     Console.ReadLine();
                     // todo: stängs programmet verkligen ner? Vad avgör?
                 }              
@@ -314,14 +273,11 @@ namespace sidoBanken
             }
         }
 
+
+        // Metoden LoggedIn ger efter lyckad inloggning användaren möjlighet att navigera inuti i programmet
          static void LoggedIn(int currentUserIndex, string[] userArray, string[] passwordArray, string[][] accountArray, double[][] balanceArray)
 
-        {
-            //int[] account1 = new int[] { 10000, 20000, 30000 };
-            //int[] account2 = new int[] { 23232, 232323, 23223 };
-            //Console.WriteLine("Du är inloggad!");
-            //Console.WriteLine("Tryck på enter för att få menyval.");
-            
+        {            
             bool loggedIn = true;
             while (loggedIn)
             {
