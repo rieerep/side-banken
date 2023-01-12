@@ -58,7 +58,7 @@ namespace sidoBanken
         {
             return String.Format("{0:.00}", amount);
         }
-        static void showAccounts(string[] accounts, double[] balances)
+        static void showAccounts(string[] accounts, double[] balances) // Metoden visar den inloggade användarens olika konton och dess saldon genom en array
         {
                 for (int index = 0; index < accounts.Length; index++)
                 {
@@ -85,6 +85,8 @@ namespace sidoBanken
         
         static void withdrawMoney(string[] accounts, double[] balances, string password) // ToDo: skicka in inloggad användares pinkod i metoden
         {
+
+            // ToDo: Ta bort i final
             Console.WriteLine("pw: " + password);
             
             
@@ -93,7 +95,7 @@ namespace sidoBanken
             // steg 3. Ta bort den summan från kontot, visa kvarkvarande saldo
             Console.WriteLine("Välj ett konto att ta ut pengar ifrån: ");
             
-            for (int index = 0; index < accounts.Length; index++)
+            for (int index = 0; index < accounts.Length; index++) // itererar igenom in
             {
                 Console.WriteLine($"{index + 1} {accounts[index]} {balances[index] } kr (index: {index})");
             }
@@ -127,7 +129,7 @@ namespace sidoBanken
             }
             else if (userAmount <= 0) // Todo: Shorthand med två uttryck och ett frågetecken
             {
-                Console.WriteLine($"Värdet måste vara större än noll (0)");
+                Console.WriteLine($"Värdet måste vara större än noll (0) kr");
                 return;
             }else
             {
@@ -151,7 +153,25 @@ namespace sidoBanken
 
 
         // Den här metoden tillåter användaren att ta ut pengar från sitt konto.
-        // 
+        //
+        //
+
+        static void crossTransfer(int CurrentUser, double[] balances, string[] accounts, string[] userArray, string[] passwordArray, string[][] accountArray, double[][] balanceArray)
+        {
+            for (int j = 0; j < accounts.Length; j++)
+            {
+                Console.WriteLine("Välj ett konto att flytta pengar ifrån: ");
+                for (int index = 0; index < accounts.Length; index++)
+                {
+                    Console.WriteLine($"{index + 1} {accounts[index]} {balances[index]} SEK index: {index}");
+                }
+                Console.Write("===> ");
+                string amountFrom = Console.ReadLine();
+                int userChoiceFrom = int.Parse(amountFrom) - 1;
+                Console.WriteLine($"Du valde {amountFrom}");
+            }
+
+        }
         static void transferMoney(string[] accounts, double[] balances)
         {
 
@@ -307,6 +327,12 @@ namespace sidoBanken
                         //MainLogin(array, array2);
                         loggedIn = false;
                         break;
+
+                        case "5":
+                        Console.WriteLine("\nCross transfer");
+                        crossTransfer(j , accountArray[currentUserIndex], balanceArray[currentUserIndex], userArray, passwordArray, accountArray, balanceArray);
+                        break;
+
 
                     default:
                         Console.WriteLine("Ogiltigt menyval. Gör val med siffra 1-4");
