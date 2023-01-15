@@ -1,6 +1,7 @@
 # Banken - a console based bank app
 A simple bank app made with C# as an examining project in school.
-## This is a simple bank program where you can list your account balance, withdraw money from different users accounts and transfer money between accounts. 
+
+# This is a simple bank program where you can list your account balance, withdraw money from different users accounts and transfer money between accounts. 
 
 ## Technologies
 • C#
